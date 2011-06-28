@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+export HOME="${HOME%%+(\/)}" # Remove trailing slashes if they exist on HOME
+
+if [[ -z "${blertr_path:-}" ]]
+then
+
+  if [[ -z "${blertr_prefix:-}" ]]
+  then
+    true ${blertr_user_install_flag:=0}
+    if (( UID > 0 || blertr_user_install_flag == 1 ))
+    then
+      blertr_prefix="$HOME"
+    else
+      blertr_prefix="/usr/local"
+    fi
+  fi
+
+  if [[ -z "${blertr_path:-}" ]]
+  then
+    if [[ "$blertr_prefix" = "$HOME" ]]
+    then
+      blertr_path="${blertr_prefix}/.blertr"
+    else
+      blertr_path="${blertr_prefix}/blertr"
+    fi
+  fi
+
+  export blertr_path="${blertr_path%%+(\/)}"
+fi
+
+if [[ -n "${blertr_path}" && -d "$blertr_path" ]]
+then
+  true ${blertr_scripts_path:="$blertr_path/scripts"}
+
+  for script in preexec cli
+  do
+    if [[ -f "$blertr_scripts_path/$script" ]]
+    then
+      source "$blertr_scripts_path/$script"
+    else
+      printf "WARNING:
+      Could not source '$blertr_scripts_path/$script' as file does not exist.
+      Blertr will likely not work as expected.\n"
+    fi
+  done
+fi
+
+
+
