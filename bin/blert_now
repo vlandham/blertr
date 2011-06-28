@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby -W0
+
+$:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
+
+require 'blertr'
+
+# interface between shell and ruby code
+# not meant to be called directly by user
+#
+# input from shell is the command name that ran
+# and how many seconds it ran for
+
+command_name = ARGV[0]
+command_seconds = ARGV[1].to_i
+
+Blertr::Control::alert command_name, command_seconds
+
+if command_seconds > 5
+end

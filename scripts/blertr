@@ -27,6 +27,8 @@ then
   fi
 
   export blertr_path="${blertr_path%%+(\/)}"
+  true ${blertr_bin_path:="$blertr_path/bin"}
+  export blertr_bin_path="${blertr_bin_path%%+(\/)}"
 fi
 
 if [[ -n "${blertr_path}" && -d "$blertr_path" ]]

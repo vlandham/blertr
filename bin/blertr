@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+action = ARGV.shift.downcase
+parameters = ARGV
+
+SERVICES = ["email", "twitter", "growl"]
+
+def add_services services, time
+  puts services
+end
+
+def take_action action, parameters
+
+  actions = action.split(",")
+  if actions[0] and SERVICES.include? actions[0]
+    add_services actions, parameters.join(" ")
+  else
+    puts "error"
+  end
+
+end
+
+
+take_action action, parameters

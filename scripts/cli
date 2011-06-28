@@ -14,9 +14,10 @@ function precmd () {
 	let elapsed=$stop-$start
 	max=${PREEXEC_MAX:-10}
 
-	if [ $elapsed -gt $max ]; then
-		growlnotify -n "Terminal" -m "took $elapsed secs" "${PREEXEC_CMD:-Terminal Command}"
-	fi
+  if [[ -f "$blertr_bin_path/blert_now" ]]
+  then
+    $blertr_bin_path/blert_now "${PREEXEC_CMD:-Terminal Command}" $elapsed
+  fi
 }
 
 preexec_install
