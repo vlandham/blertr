@@ -1,0 +1,25 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    i18n (0.6.0)
+    mail (2.3.0)
+      i18n (>= 0.4.0)
+      mime-types (~> 1.16)
+      treetop (~> 1.4.8)
+    mime (0.1)
+    mime-types (1.16)
+    polyglot (0.3.1)
+    ruby-gmail (0.2.1)
+      mail (>= 2.2.1)
+      shared-mime-info
+    shared-mime-info (0.1)
+    treetop (1.4.9)
+      polyglot (>= 0.3.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  mail (~> 2.3.0)
+  mime
+  ruby-gmail (~> 0.2.0)

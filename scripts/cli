@@ -12,11 +12,14 @@ function precmd () {
 	stop=$(date +'%s')
 	start=${PREEXEC_TIME:-$stop}
 	let elapsed=$stop-$start
-	max=${PREEXEC_MAX:-10}
+	max=${PREEXEC_MAX:-5}
 
-  if [[ -f "$blertr_bin_path/blert_now" ]]
+  if [ $elapsed -gt $max ]; 
   then
-    $blertr_bin_path/blert_now "${PREEXEC_CMD:-Terminal Command}" $elapsed
+    if [[ -f "$blertr_bin_path/blert_now" ]]
+    then
+      $blertr_bin_path/blert_now "${PREEXEC_CMD:-Terminal Command}" $elapsed
+    fi
   fi
 }
 

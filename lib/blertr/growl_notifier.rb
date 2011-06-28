@@ -2,6 +2,10 @@ require 'blertr/notifier'
 
 module Blertr
   class GrowlNotifier < Notifier
+    def initialize
+      @name = "growl"
+    end
+
     def alert name, time
       system("growlnotify -n \"Terminal\" -m \"took #{time} secs\" #{name}")
     end

@@ -1,5 +1,6 @@
 module Blertr
   class Notifier
+    attr_reader :name
     def initialize
     end
 
