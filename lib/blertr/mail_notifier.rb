@@ -10,18 +10,14 @@ module Blertr
     end
 
     def alert name, time
-      begin
-        username = options[:username]
-        password = options[:password]
-        receiver = options[:to]
-        msg = message name, time
-        smtp = Net::SMTP.new 'smtp.gmail.com', 587
-        smtp.enable_starttls
-        smtp.start('gmail.com', username, password, :login) do
-          smtp.send_message(msg, "#{username}@gmail.com", receiver)
-        end
-      rescue
-        puts "error in #{name} alert"
+      username = options[:username]
+      password = options[:password]
+      receiver = options[:to]
+      msg = message name, time
+      smtp = Net::SMTP.new 'smtp.gmail.com', 587
+      smtp.enable_starttls
+      smtp.start('gmail.com', username, password, :login) do
+        smtp.send_message(msg, "#{username}@gmail.com", receiver)
       end
     end
 
