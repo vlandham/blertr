@@ -12,9 +12,9 @@ function precmd () {
 	stop=$(date +'%s')
 	start=${PREEXEC_TIME:-$stop}
 	let elapsed=$stop-$start
-	max=${PREEXEC_MAX:-5}
+	min=${PREEXEC_MIN:-5}
 
-  if [ $elapsed -gt $max ]; 
+  if [ $elapsed -gt $min ]; 
   then
     if [[ -f "$blertr_bin_path/blert_now" ]]
     then
