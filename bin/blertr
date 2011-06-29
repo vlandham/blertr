@@ -12,7 +12,28 @@ def add_services services, time
 end
 
 def take_action action, parameters
-  if action == "info"
+  if action == "install"
+    blertr_path = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+    blertr_symlink = File.expand_path("~/.blertr")
+    if File.exists? blertr_symlink
+      puts "ERROR: Blertr appears to already be installed.\nUninstall with blertr remove"
+    else
+      puts "creating symlink from #{blertr_path} to #{blertr_symlink}"
+      system("ln -s #{blertr_path} #{blertr_symlink}")
+      puts "Blertr is now (almost) installed!\nPut this at the bottom of your .bashrc file:"
+      puts "[[ -s \"$HOME/.blertr/scripts/blertr\" ]] && . \"$HOME/.blertr/scripts/blertr\""
+    end
+  elsif action == "remove"
+    blertr_symlink = File.expand_path("~/.blertr")
+    if File.exists? blertr_symlink
+      puts "Removing ~/.blertr"
+      system("rm #{blertr_symlink}")
+      puts "Blertr is now (almost) uninstalled.\nRemove from .bashrc file:"
+      puts "[[ -s \"$HOME/.blertr/scripts/blertr\" ]] && . \"$HOME/.blertr/scripts/blertr\""
+    else
+      puts "ERROR: it doesn't look like Blertr is installed"
+    end
+  elsif action == "info"
     puts "getting info"
   else
     action_found = false
