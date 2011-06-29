@@ -1,24 +1,39 @@
 #!/usr/bin/env ruby
 
-action = ARGV.shift.downcase
-parameters = ARGV
+$:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 
-SERVICES = ["email", "twitter", "growl"]
+require 'blertr'
+
+action = ARGV.shift
+parameters = ARGV
 
 def add_services services, time
   puts services
 end
 
 def take_action action, parameters
-
-  actions = action.split(",")
-  if actions[0] and SERVICES.include? actions[0]
-    add_services actions, parameters.join(" ")
+  if action == "info"
+    puts "getting info"
   else
-    puts "error"
-  end
+    action_found = false
+    actions = action.split(",")
+    actions.each do |action|
+      if Blertr::Control::is_notifier? action
+        action_found = true
+        new_time = parameters.join(" ")
+        Blertr::Control::change_time action, new_time
+      end
+    end
 
+    if !action_found
+      puts "error #{action} unknown command"
+    end
+
+  end
 end
 
-
-take_action action, parameters
+if action
+  take_action action.downcase, parameters
+else
+  puts "usage blertr [action] [parameters]"
+end
