@@ -12,8 +12,9 @@ require 'blertr'
 
 command_name = ARGV[0]
 command_seconds = ARGV[1].to_i
-
-Blertr::Control::alert command_name, command_seconds
-
-if command_seconds > 5
+if command_name and command_seconds
+  Blertr::Control::alert command_name, command_seconds
+else
+  puts "usage: blertr_now command time_taken"
 end
+
