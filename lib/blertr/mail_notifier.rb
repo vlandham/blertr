@@ -1,6 +1,6 @@
 require 'blertr/notifier'
 require 'yaml'
-require 'gmail'
+require 'net/smtp'
 
 module Blertr
   class MailNotifier < Notifier
@@ -10,13 +10,22 @@ module Blertr
     end
 
     def alert name, time
-      gmail = Gmail.new(@options[:username], @options[:password])
-      gmail.deliver do
-        to "#{@options[:to]}"
-        subject "#{name} is done"
-        body "#{name} has finished running.\nTotal Running Time: #{time} seconds"
+      username = @options[:username]
+      password = @options[:password]
+      receiver = @options[:to]
+      msg = message name, time
+      smtp = Net::SMTP.new 'smtp.gmail.com', 587
+      smtp.enable_starttls
+      smtp.start('gmail.com', username, password, :login) do
+        smtp.send_message(msg, "#{username}@gmail.com", receiver)
       end
-      gmail.logout
+    end
+
+    def message name, time
+      first_name = name.split(" ")[0]
+      msg = "Subject: #{first_name} is done!\n"
+      msg += "#{first_name} has completed.\nFull Command:#{name}\nTime Taken:#{time} seconds\n"
+      msg
     end
 
     def can_alert?
@@ -29,7 +38,6 @@ module Blertr
         rtn &= @options[:to]
       end
       rtn
-      false
     end
   end
 end
