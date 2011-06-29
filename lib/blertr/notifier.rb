@@ -29,7 +29,19 @@ module Blertr
       rtn
     end
 
-    def should_alert? name, time
+    def set_time new_time
+      opts = options
+      opts[:time] = new_time
+      save_options(opts)
+    end
+
+    def save_options new_options
+      File.open(config_file, 'w') do |file|
+        file.puts(YAML::dump(new_options))
+      end
+    end
+
+    def will_alert? name, time
       rtn = self.can_alert?
       if rtn
         rtn = in_time_window? time
@@ -44,9 +56,6 @@ module Blertr
         rtn = true
       end
       rtn
-    end
-
-    def alert
     end
 
     def can_alert?
