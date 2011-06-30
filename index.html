@@ -44,15 +44,14 @@
       var trumpet = paper.set();
       trumpet.push(trumpet_line, trumpet_fill);
 
-      trumpet.attr("fill", "#C7F464");
+      trumpet.attr("fill", "#FF6B6B");
 
       trumpet.animate({rotation:"150 320 240"}, 2000, "bounce");
       var trumpet2 = trumpet.clone();
-      trumpet2.animate({rotation:"80 320 240", fill:"#4ECDC4"}, 3000, "bounce");
+      trumpet2.animate({rotation:"80 320 240", fill:"#4ECDC4"}, 3000, "elastic");
 
       var trumpet3 = trumpet.clone();
-      trumpet3.animate({rotation:"-64 320 240", fill:"#FF6B6B"}, 2500, "bounce");
-      var blert = paper.text( 50, 50, "blert");
+      trumpet3.animate({rotation:"-64 320 240", fill:"#C7F464"}, 2500, "bounce");
 
 
     };
