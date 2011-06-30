@@ -7,6 +7,7 @@ module Blertr
     end
 
     def alert name, time
+      #TODO: look to supporting other growl frameworks on other OSs
       system("growlnotify -n \"Terminal\" -m \"took #{time} secs\" #{name}")
     end
 
