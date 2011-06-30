@@ -1,6 +1,7 @@
 
 require 'blertr/mail_notifier'
 require 'blertr/growl_notifier'
+require 'blertr/twitter_notifier'
 require 'blertr/time_parser'
 
 module Blertr
@@ -23,6 +24,7 @@ module Blertr
       noters = []
       noters << MailNotifier.new
       noters << GrowlNotifier.new
+      noters << TwitterNotifier.new
       noters
     end
 

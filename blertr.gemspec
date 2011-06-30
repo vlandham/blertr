@@ -6,6 +6,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rdoc", "~> 2.5"
   s.add_development_dependency "rspec", "~> 2.3"
   s.add_development_dependency "simplecov", "~> 0.4"
+  s.add_dependency "twitter", "~> 1.6.0"
   s.authors = ['Jim Vallandingham']
   s.description = %q{Bash Alerts: alerts for when bash scripts and commands complete}
   s.email = ''
