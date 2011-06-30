@@ -46,14 +46,39 @@
 
       trumpet.attr("fill", "#FF6B6B");
       trumpet.attr("stroke-width", 0);
+      trumpet.click(function (event) {
+          this.attr({opacity: 0.5});
+          });
+      
+      trumpet.hover(function (event) {
+          this.stop
+          this.animate({fill: "#000"}, 5000, "elastic");
+          }, function (event) {
+          this.stop
+          this.animate({fill: "#FF6B6B"}, 5000, "elastic");
+          });
 
       trumpet.animate({rotation:"150 320 240"}, 2000, "bounce");
       var trumpet2 = trumpet.clone();
       trumpet2.animate({rotation:"80 320 240", fill:"#4ECDC4"}, 3000, "elastic");
 
+      trumpet2.hover(function (event) {
+          this.stop
+          this.animate({fill: "#000"}, 5000, "elastic");
+          }, function (event) {
+          this.stop
+          this.animate({fill: "#4ECDC4"}, 5000, "elastic");
+          });
       var trumpet3 = trumpet.clone();
       trumpet3.animate({rotation:"-64 320 240", fill:"#C7F464"}, 2500, "bounce");
 
+      trumpet3.hover(function (event) {
+          this.stop
+          this.animate({fill: "#000"}, 5000, "elastic");
+          }, function (event) {
+          this.stop
+          this.animate({fill: "#C7F464"}, 5000, "elastic");
+          });
     };
 </script> 
 
