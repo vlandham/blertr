@@ -10,7 +10,11 @@ module Blertr
     end
 
     def config_file
-      File.join(config_path, "#{name}_config.yaml")
+      if name
+        File.join(config_path, "#{name}_config.yaml")
+      else
+        ""
+      end
     end
 
     def options
@@ -36,8 +40,10 @@ module Blertr
     end
 
     def save_options new_options
-      File.open(config_file, 'w') do |file|
-        file.puts(YAML::dump(new_options))
+      if File.exists? config_file
+        File.open(config_file, 'w') do |file|
+          file.puts(YAML::dump(new_options))
+        end
       end
     end
 
