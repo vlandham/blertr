@@ -1,5 +1,4 @@
 require 'blertr/notifier'
-require 'yaml'
 require 'net/smtp'
 
 module Blertr

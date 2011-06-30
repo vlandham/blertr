@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Blertr
   class Notifier
     attr_reader :name
