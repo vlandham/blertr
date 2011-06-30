@@ -29,7 +29,7 @@ describe Blertr::Notifier do
     @notifier.can_alert?.should == false
   end
 
-  it "should not alert by default" do 
+  it "should not alert by default" do
     @notifier.will_alert?("name", 233).should == false
   end
 
