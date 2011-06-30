@@ -45,6 +45,7 @@
       trumpet.push(trumpet_line, trumpet_fill);
 
       trumpet.attr("fill", "#FF6B6B");
+      trumpet.attr("stroke-width", 0);
 
       trumpet.animate({rotation:"150 320 240"}, 2000, "bounce");
       var trumpet2 = trumpet.clone();
@@ -52,7 +53,6 @@
 
       var trumpet3 = trumpet.clone();
       trumpet3.animate({rotation:"-64 320 240", fill:"#C7F464"}, 2500, "bounce");
-
 
     };
 </script> 
