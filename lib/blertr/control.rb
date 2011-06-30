@@ -5,6 +5,8 @@ require 'blertr/time_parser'
 
 module Blertr
   class Control
+    # Sends out alert from each notifier if
+    # time passed is long enough
     def self.alert command_name, command_time
       notifiers.each do |notifier|
         if notifier.will_alert? command_name, command_time
