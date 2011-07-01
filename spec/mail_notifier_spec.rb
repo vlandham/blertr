@@ -12,11 +12,7 @@ describe Blertr::MailNotifier do
     @notifier.name.should == "mail"
   end
 
-  it "should have a valid config file" do
-    File.exists?(@notifier.config_file).should == true
-  end
-
-  it "should have options from the config file" do
+  it "should have options" do
     @notifier.options.empty?.should == false
     @notifier.options[:username].class.should == String
     @notifier.options[:time].class.should == Fixnum
@@ -35,5 +31,14 @@ describe Blertr::MailNotifier do
     @notifier.will_alert?("name", 20000).should == true
     @notifier.options[:time] = 20001
     @notifier.will_alert?("name", 20000).should == false
+  end
+
+  it "should save new time" do
+    old_time = @notifier.options[:time]
+    new_time = old_time + 100
+    @notifier.set_time new_time
+    @notifier.options[:time].should == new_time
+    @notifier.set_time old_time
+    @notifier.options[:time].should == old_time
   end
 end

@@ -1,4 +1,5 @@
 require 'yaml'
+require 'blertr/options'
 
 module Blertr
   class Notifier
@@ -7,46 +8,15 @@ module Blertr
       @name = nil
     end
 
-    def config_path
-      File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "config"))
-    end
-
-    def config_file
-      if name
-        File.join(config_path, "#{name}_config.yaml")
-      else
-        ""
-      end
-    end
-
     def options
-      @options ||= get_options
+      @options ||= Options::options_for name
       @options
-    end
-
-    def get_options
-      rtn = {}
-      if File.exists? config_file
-        yaml_data = YAML::load(open(config_file))
-        if yaml_data
-          rtn = Hash[yaml_data.map {|k,v| [k.to_sym, v]}]
-        end
-      end
-      rtn
     end
 
     def set_time new_time
       opts = options
       opts[:time] = new_time
-      save_options(opts)
-    end
-
-    def save_options new_options
-      if File.exists? config_file
-        File.open(config_file, 'w') do |file|
-          file.puts(YAML::dump(new_options))
-        end
-      end
+      Options::save_options_for name, opts
     end
 
     def will_alert? name, time
