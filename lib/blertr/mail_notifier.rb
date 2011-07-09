@@ -5,7 +5,7 @@ module Blertr
   class MailNotifier < Notifier
     def initialize
       super
-      @name = "mail"
+      @names = ["mail", "email"]
     end
 
     def alert name, time

@@ -12,6 +12,10 @@ describe Blertr::MailNotifier do
     @notifier.name.should == "mail"
   end
 
+  it "should have aliases" do
+    @notifier.names.include?("mail").should == true
+  end
+
   it "should have options" do
     @notifier.options.empty?.should == false
     @notifier.options[:username].class.should == String

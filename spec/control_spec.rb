@@ -22,6 +22,11 @@ describe Blertr::Control do
     bad_names.each {|name| Blertr::Control::is_notifier?(name).should == false}
   end
 
+  it "should distinguish alias names" do
+    alias_names = ["mail", "tweet"]
+    alias_names.each {|name| Blertr::Control::is_notifier?(name).should == true}
+  end
+
   it "should get notifier with name" do
     notifier = Blertr::Control::notifier_with_name 'mail'
     notifier.name.should == 'mail'

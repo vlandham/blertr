@@ -3,9 +3,13 @@ require 'blertr/options'
 
 module Blertr
   class Notifier
-    attr_reader :name
+    attr_reader :names
     def initialize
-      @name = nil
+      @names = []
+    end
+
+    def name
+      (!@names or @names.empty?) ? nil : @names[0]
     end
 
     def options

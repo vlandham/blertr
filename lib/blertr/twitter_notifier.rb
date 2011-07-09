@@ -6,7 +6,7 @@ module Blertr
   class TwitterNotifier < Notifier
     def initialize
       super
-      @name = "twitter"
+      @names = ["twitter", "tweet", "twit"]
     end
 
     def alert name, time

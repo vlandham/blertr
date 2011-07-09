@@ -3,7 +3,8 @@ require 'blertr/notifier'
 module Blertr
   class GrowlNotifier < Notifier
     def initialize
-      @name = "growl"
+      super
+      @names = ["growl"]
     end
 
     def alert name, time

@@ -11,10 +11,13 @@ module Blertr
     def self.alert command_name, command_time
       notifiers.each do |notifier|
         if notifier.will_alert? command_name, command_time
-          begin
-            notifier.alert command_name, command_time
-          rescue
-            puts "problem with #{notifier.name} alert"
+          fork do
+            begin
+              notifier.alert command_name, command_time
+            rescue
+              puts "problem with #{notifier.name} alert"
+            end
+            exit
           end
         end
       end
@@ -31,6 +34,9 @@ module Blertr
     def self.notifier_with_name name
       notifiers.each do |notifier|
         if name == notifier.name
+          return notifier
+        end
+        if notifier.names.include? name
           return notifier
         end
       end
