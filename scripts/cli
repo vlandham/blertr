@@ -21,6 +21,7 @@ function precmd () {
       $blertr_bin_path/blert_now "${PREEXEC_CMD:-Terminal Command}" $elapsed
     fi
   fi
+  unset PREEXEC_TIME
 }
 
 preexec_install
