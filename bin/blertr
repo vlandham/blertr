@@ -23,7 +23,7 @@ def take_action action, parameters
       puts "Blertr is now (almost) installed!\nPut this at the bottom of your .bashrc file:"
       puts "[[ -s \"$HOME/.blertr/scripts/blertr\" ]] && . \"$HOME/.blertr/scripts/blertr\""
     end
-  elsif action == "remove"
+  elsif action == "uninstall"
     blertr_symlink = File.expand_path("~/.blertr")
     if File.exists? blertr_symlink
       puts "Removing ~/.blertr"
@@ -35,6 +35,10 @@ def take_action action, parameters
     end
   elsif action == "info"
     puts "getting info"
+  elsif action == "exclude"
+    name = parameters.join(" ")
+    puts "Excluding #{name} from Blertr alerts"
+    Blertr::Blacklist.new.add(name)
   else
     action_found = false
     actions = action.split(",")

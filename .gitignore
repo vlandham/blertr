@@ -2,3 +2,4 @@
 update/*
 coverage/*
 *.swp
+spec/sandbox/*

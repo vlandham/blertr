@@ -3,21 +3,25 @@ require 'blertr/mail_notifier'
 require 'blertr/growl_notifier'
 require 'blertr/twitter_notifier'
 require 'blertr/time_parser'
+require 'blertr/blacklist.rb'
 
 module Blertr
   class Control
     # Sends out alert from each notifier if
     # time passed is long enough
     def self.alert command_name, command_time
-      notifiers.each do |notifier|
-        if notifier.will_alert? command_name, command_time
-          fork do
-            begin
-              notifier.alert command_name, command_time
-            rescue
-              puts "problem with #{notifier.name} alert"
+      blacklist = Blacklist.new
+      if !blacklist.blacklisted?(command_name)
+        notifiers.each do |notifier|
+          if notifier.will_alert?(command_name, command_time)
+            fork do
+              begin
+                notifier.alert command_name, command_time
+              rescue
+                puts "problem with #{notifier.name} alert"
+              end
+              exit
             end
-            exit
           end
         end
       end
