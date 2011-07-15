@@ -1,6 +1,5 @@
 
 require 'blertr/notifier'
-require 'twitter'
 
 module Blertr
   class TwitterNotifier < Notifier
@@ -29,7 +28,15 @@ module Blertr
 
     def can_alert?
       rtn = true
-      [:consumer_key, :consumer_secret, :oauth_token, :oauth_token_secret].each { |key| rtn &= options[key]}
+      begin
+        require 'rubygems'
+        require 'twitter'
+      rescue LoadError => e
+        rtn = false
+      end
+      if rtn
+        [:consumer_key, :consumer_secret, :oauth_token, :oauth_token_secret].each { |key| rtn &= options[key]}
+      end
       rtn
     end
   end
