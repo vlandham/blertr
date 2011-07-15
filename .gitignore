@@ -3,3 +3,4 @@ update/*
 coverage/*
 *.swp
 spec/sandbox/*
+blertr-*.gem
