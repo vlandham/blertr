@@ -11,8 +11,47 @@ def add_services services, time
   puts services
 end
 
+def help
+  help_string = <<EOS
+-=[ Welcome to Blertr - Notifications for Bash commands ]=-
+
+Usage: blertr [command] [command parameters]
+
+Commands:
+    help       Output this help message
+
+    install    Add symlinks to your system to allow
+               Blertr to function properly
+
+    uninstall  Remove symlinks and other setup process
+               Effectively uninstalling Blertr
+    
+    info       Pass in a notifier name to get the 
+               information it is using to send notifications
+               Example: blertr info email
+
+    exclude    Pass in a shell command to prevent Blertr from
+               sending notifications when that command is 
+               executed
+               Example: blertr exclude ssh
+   
+    time       Pass in a notifier name and a time string to
+               set the time required to pass before the
+               notifier sends a message for a command
+               Example: blertr time email 5 minutes
+               This would make blertr send an email only if
+               the command executing took longer than 5 mins
+
+               
+EOS
+  puts help_string
+end
+
 def take_action action, parameters
-  if action == "install"
+  case action
+  when "help"
+    help
+  when "install"
     blertr_path = File.expand_path(File.join(File.dirname(__FILE__), ".."))
     blertr_symlink = File.expand_path("~/.blertr")
     if File.exists? blertr_symlink
@@ -23,7 +62,7 @@ def take_action action, parameters
       puts "Blertr is now (almost) installed!\nPut this at the bottom of your .bashrc file:"
       puts "[[ -s \"$HOME/.blertr/scripts/blertr\" ]] && . \"$HOME/.blertr/scripts/blertr\""
     end
-  elsif action == "uninstall"
+  when "uninstall"
     blertr_symlink = File.expand_path("~/.blertr")
     if File.exists? blertr_symlink
       puts "Removing ~/.blertr"
@@ -33,32 +72,37 @@ def take_action action, parameters
     else
       puts "ERROR: it doesn't look like Blertr is installed"
     end
-  elsif action == "info"
+  when "info"
     puts "getting info"
-  elsif action == "exclude"
+  when "status"
+    puts "getting status"
+  when "exclude"
     name = parameters.join(" ")
     puts "Excluding #{name} from Blertr alerts"
     Blertr::Blacklist.new.add(name)
-  else
-    action_found = false
-    actions = action.split(",")
-    actions.each do |action|
-      if Blertr::Control::is_notifier? action
-        action_found = true
+  when "time"
+    notifier_found = false
+    notifiers = parameters.shift.split(",")
+    notifiers.each do |notifier|
+      if Blertr::Control::is_notifier? notifier
+        notifier_found = true
         new_time = parameters.join(" ")
-        Blertr::Control::change_time action, new_time
+        Blertr::Control::change_time notifier, new_time
       end
     end
 
-    if !action_found
-      puts "error #{action} unknown command"
+    if !notifier_found
+      puts "Sorry, #{action} isn't a notifier."
+      puts "Use blertr status for a list of all notifiers"
     end
-
+  else
+      puts "Sorry, #{action} isn't a recognized command"
+      puts "use blertr help to get a list of availible commands."
   end
 end
 
 if action
   take_action action.downcase, parameters
 else
-  puts "usage blertr [action] [parameters]"
+  puts "usage blertr [command] [command parameters]"
 end
