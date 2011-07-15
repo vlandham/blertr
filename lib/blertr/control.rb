@@ -2,6 +2,7 @@ require 'blertr/message'
 require 'blertr/mail_notifier'
 require 'blertr/growl_notifier'
 require 'blertr/twitter_notifier'
+require 'blertr/notify_send_notifier'
 require 'blertr/time_parser'
 require 'blertr/blacklist.rb'
 
@@ -33,6 +34,7 @@ module Blertr
       noters << MailNotifier.new
       noters << GrowlNotifier.new
       noters << TwitterNotifier.new
+      noters << NotifySendNotifier.new
       noters
     end
 
