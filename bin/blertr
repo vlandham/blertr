@@ -41,8 +41,6 @@ Commands:
                Example: blertr time email 5 minutes
                This would make blertr send an email only if
                the command executing took longer than 5 mins
-
-               
 EOS
   puts help_string
 end
