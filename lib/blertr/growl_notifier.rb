@@ -13,8 +13,7 @@ module Blertr
     end
 
     def can_alert?
-      results = %x[which growlnotify]
-      !results.nil? and !results.empty?
+      system("which growlnotify > /dev/null 2>&1")
     end
   end
 end
