@@ -22,7 +22,7 @@ module Blertr
 
     def create_message message
       msg = "Subject: #{message.command_short_name} is done!\n"
-      msg += "#{message.command_short_name} has completed.\nFull Command: #{message.command}\nTime Taken: #{message.time_string}\n"
+      msg += "#{message.command_short_name} has completed.\nCommand: #{message.command}\nTime: #{message.time_string}\n"
       msg
     end
 
