@@ -1,4 +1,4 @@
-
+require 'blertr/message'
 require 'blertr/mail_notifier'
 require 'blertr/growl_notifier'
 require 'blertr/twitter_notifier'
@@ -12,11 +12,12 @@ module Blertr
     def self.alert command_name, command_time
       blacklist = Blacklist.new
       if !blacklist.blacklisted?(command_name)
+        message = Message.new(command_name, command_time)
         notifiers.each do |notifier|
-          if notifier.will_alert?(command_name, command_time)
+          if notifier.will_alert?(message.command, message.seconds)
             fork do
               begin
-                notifier.alert command_name, command_time
+                notifier.alert message
               rescue
                 puts "problem with #{notifier.name} alert"
               end

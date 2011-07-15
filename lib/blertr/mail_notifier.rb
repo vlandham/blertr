@@ -8,11 +8,11 @@ module Blertr
       @names = ["mail", "email"]
     end
 
-    def alert name, time
+    def alert message
       username = options[:username]
       password = options[:password]
       receiver = options[:to]
-      msg = message name, time
+      msg = create_message(message)
       smtp = Net::SMTP.new 'smtp.gmail.com', 587
       smtp.enable_starttls
       smtp.start('gmail.com', username, password, :login) do
@@ -20,10 +20,9 @@ module Blertr
       end
     end
 
-    def message name, time
-      first_name = name.split(" ")[0]
-      msg = "Subject: #{first_name} is done!\n"
-      msg += "#{first_name} has completed.\nFull Command: #{name}\nTime Taken: #{time} seconds\n"
+    def create_message message
+      msg = "Subject: #{message.command_short_name} is done!\n"
+      msg += "#{message.command_short_name} has completed.\nFull Command: #{message.command}\nTime Taken: #{message.time_string}\n"
       msg
     end
 

@@ -7,9 +7,9 @@ module Blertr
       @names = ["growl"]
     end
 
-    def alert name, time
+    def alert message
       #TODO: look to supporting other growl frameworks on other OSs
-      system("growlnotify -n \"Terminal\" -m \"took #{time} secs\" \"#{name}\"")
+      system("growlnotify -n \"Terminal\" -m \"took #{message.time_string}\" \"#{message.command}\"")
     end
 
     def can_alert?

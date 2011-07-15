@@ -8,21 +8,20 @@ module Blertr
       @names = ["twitter", "tweet", "twit"]
     end
 
-    def alert name, time
+    def alert message
       Twitter.configure do |config|
         config.consumer_key = options[:consumer_key]
         config.consumer_secret = options[:consumer_secret]
         config.oauth_token = options[:oauth_token]
         config.oauth_token_secret = options[:oauth_token_secret]
       end
-      first_name = name.split(" ")[0]
-      msg = message first_name, time
+      msg = message message.command_short_name, command.time_string
       Twitter.update(msg)
     end
 
     def message name, time
       user = options[:to].nil? ? "" : "@#{options[:to]}"
-      msg = "#{user} #{name} is done! Took #{time} secs"
+      msg = "#{user} #{name} is done! Took #{time}"
       msg
     end
 

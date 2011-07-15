@@ -31,6 +31,9 @@ module Blertr
       rtn
     end
 
+    def alert message
+    end
+
     def in_time_window? time
       rtn = false
       time_min = options[:time]
