@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.add_dependency "twitter", "~> 1.6.0"
   s.authors = ['Jim Vallandingham']
   s.description = %q{Bash Alerts: alerts for when bash scripts and commands complete}
-  s.email = ''
+  s.email = 'vvv@gmail.com'
   s.executables = `git ls-files -- bin/*`.split("\n").map{|f| File.basename(f)}
   s.extra_rdoc_files = ['LICENSE.textile', 'README.textile']
   s.files = `git ls-files`.split("\n")
