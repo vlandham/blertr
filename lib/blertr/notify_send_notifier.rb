@@ -9,7 +9,7 @@ module Blertr
 
     def alert message
       #TODO: look to supporting other growl frameworks on other OSs
-      system("notify-send \"#{message.command}\" \"took #{message.time_string}\"")
+      system("notify-send \"#{message.command}\" \"took #{message.time_string}\" 2> /dev/null")
     end
 
     def can_alert?
