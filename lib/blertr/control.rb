@@ -11,22 +11,33 @@ module Blertr
     # Sends out alert from each notifier if
     # time passed is long enough
     def self.alert command_name, command_time
+      # trap interrupt so as to not output
+      # error messages if execution is interrupted
+      interrupted = false
+      trap("INT") {interrupted = true}
+
       blacklist = Blacklist.new
       if !blacklist.blacklisted?(command_name)
         message = Message.new(command_name, command_time)
         notifiers.each do |notifier|
+          # check if interrupted first and exit
+          # as soon as possible
+          if interrupted
+            exit
+          end
+
           if notifier.will_alert?(message.command, message.seconds)
             fork do
               begin
                 notifier.alert message
               rescue
                 puts "problem with #{notifier.name} alert"
-              end
+              end #begin
               exit
-            end
-          end
-        end
-      end
+            end #fork
+          end #will_alert?
+        end #each
+      end #!blacklisted?
     end
 
     def self.notifiers
