@@ -27,7 +27,7 @@ then
   fi
 
   export blertr_path="${blertr_path%%+(\/)}"
-  true ${blertr_bin_path:="$blertr_path/scripts_bin"}
+  true ${blertr_bin_path="$blertr_path/scripts_bin"}
   export blertr_bin_path="${blertr_bin_path%%+(\/)}"
 fi
 
