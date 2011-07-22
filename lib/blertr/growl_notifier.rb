@@ -8,12 +8,13 @@ module Blertr
     end
 
     def alert message
-      #TODO: look to supporting other growl frameworks on other OSs
       system("growlnotify -n \"Terminal\" -m \"took #{message.time_string}\" \"#{message.command}\"")
     end
 
     def can_alert?
-      system("which growlnotify > /dev/null 2>&1")
+      rtn = system("which growlnotify > /dev/null 2>&1")
+      error_messages << "growlnotify not availible from $PATH" unless rtn
+      rtn
     end
   end
 end

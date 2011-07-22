@@ -29,8 +29,11 @@ module Blertr
     def can_alert?
       rtn = true
       rtn &= options[:username]
+      error_messages << "No :username option in config file" if !options[:username]
       rtn &= options[:password]
+      error_messages << "No :password option in config file" if !options[:password]
       rtn &= options[:to]
+      error_messages << "No :to option in config file" if !options[:to]
       rtn
     end
   end

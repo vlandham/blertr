@@ -3,9 +3,10 @@ require 'blertr/options'
 
 module Blertr
   class Notifier
-    attr_reader :names
+    attr_reader :names, :error_messages
     def initialize
       @names = []
+      @error_messages = []
     end
 
     def name
@@ -44,6 +45,7 @@ module Blertr
     end
 
     def can_alert?
+      error_messages << "Unknown Error"
       false
     end
   end

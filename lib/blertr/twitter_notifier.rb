@@ -32,9 +32,13 @@ module Blertr
         require 'twitter'
       rescue LoadError => e
         rtn = false
+        error_messages << "twitter gem cannot be found"
       end
       if rtn
-        [:consumer_key, :consumer_secret, :oauth_token, :oauth_token_secret].each { |key| rtn &= options[key]}
+        [:consumer_key, :consumer_secret, :oauth_token, :oauth_token_secret].each do |key|
+          rtn &= options[key]
+          error_messages << "No #{key} in config file"
+        end
       end
       rtn
     end

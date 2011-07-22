@@ -30,6 +30,10 @@ Commands:
                information it is using to send notifications
                Example: blertr info email
 
+    status     For each notifier, Blertr lists if it currently can
+               send notifications and then lists any error messages
+               if it cannot. Useful for debuggin problems with notifiers
+
     exclude    Pass in a shell command to prevent Blertr from
                sending notifications when that command is 
                executed
@@ -71,9 +75,33 @@ def take_action action, parameters
       puts "ERROR: it doesn't look like Blertr is installed"
     end
   when "info"
-    puts "getting info"
+    raw_name = parameters.shift
+    if Blertr::Control::is_notifier? raw_name
+      name = Blertr::Control::notifier_with_name(raw_name).name
+      info_hash = Blertr::Options.options_for name
+      puts "Configuration for: #{name}"
+      if info_hash.empty?
+        puts "No configuration file for #{name} or config file is empty"
+      else
+        info_hash.each do |key,value|
+          puts "#{key}: #{value}"
+        end
+      end
+    else
+      if !raw_name or (raw_name and raw_name.empty?)
+        puts "info requires the name of a notifier"
+      else
+        puts "Sorry, #{raw_name} is not a notifier"
+      end
+    end
   when "status"
-    puts "getting status"
+    Blertr::Control::notifiers.each do |notifier|
+      notify_message = notifier.can_alert? ? "can alert" : "cannot alert"
+      puts "#{notifier.name}: #{notify_message}"
+      if !notifier.error_messages.empty?
+        notifier.error_messages.each {|err| puts "  #{err}"}
+      end
+    end
   when "exclude"
     name = parameters.join(" ")
     puts "Excluding #{name} from Blertr alerts"
