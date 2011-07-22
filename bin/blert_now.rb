@@ -1,4 +1,3 @@
-#!/usr/bin/env ruby -W0
 
 $:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 

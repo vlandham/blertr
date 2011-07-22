@@ -16,9 +16,9 @@ function precmd () {
 
   if [ $elapsed -gt $min ]; 
   then
-    if [[ -f "$blertr_bin_path/blert_now" ]]
+    if [[ -f "$blertr_bin_path/blert_now.rb" ]]
     then
-      $blertr_bin_path/blert_now "${PREEXEC_CMD:-Terminal Command}" $elapsed
+      ruby -W0 $blertr_bin_path/blert_now.rb "${PREEXEC_CMD:-Terminal Command}" $elapsed
     fi
   fi
   unset PREEXEC_TIME
