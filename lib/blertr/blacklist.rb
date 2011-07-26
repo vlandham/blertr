@@ -14,7 +14,9 @@ module Blertr
       if !File.exists?(@path)
         create
       end
-      yaml_data = YAML::load(open(@path))
+      file = File.open(@path, 'r')
+      yaml_data = YAML::load(file)
+      file.close
       @list = yaml_data.to_a if yaml_data
     end
 
