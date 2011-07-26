@@ -1,4 +1,5 @@
 require 'fileutils'
+require 'blertr/constants'
 
 module Blertr
   class Options
@@ -28,7 +29,12 @@ module Blertr
     end
 
     def self.config_path
-      File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "config"))
+      # first try local config
+      path = File.expand_path(CONFIG_DIR_PATH)
+      if !File.exists?(path)
+        path = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "config"))
+      end
+      path
     end
 
     def self.config_file_for name

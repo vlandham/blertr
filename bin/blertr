@@ -52,24 +52,34 @@ EOS
 end
 
 def take_action action, parameters
+  blertr_path = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+  blertr_local_dir = File.expand_path("~/.blertr")
+  blertr_symlink = File.join(blertr_local_dir, "app")
   case action
   when "help"
     help
   when "install"
-    blertr_path = File.expand_path(File.join(File.dirname(__FILE__), ".."))
-    blertr_symlink = File.expand_path("~/.blertr")
     if File.exists? blertr_symlink
-      puts "ERROR: Blertr appears to already be installed.\nUninstall with blertr remove"
+      puts "ERROR: Blertr appears to already be installed.\nUninstall with blertr uninstall"
     else
+      puts "creating #{blertr_local_dir} directory"
+      system("mkdir -p #{blertr_local_dir}")
+
       puts "creating symlink from #{blertr_path} to #{blertr_symlink}"
       system("ln -s #{blertr_path} #{blertr_symlink}")
+
+      config_dir = File.expand_path(Blertr::CONFIG_DIR_PATH)
+      if !File.exists?(config_dir)
+        blertr_config_dir = File.expand_path(File.join(File.dirname(__FILE__), "..", "config"))
+        puts "copying config files to #{blertr_path}"
+        system("cp -r #{blertr_config_dir} #{blertr_local_dir}")
+      end
       puts "Blertr is now (almost) installed!\nPut this at the bottom of your .bashrc file:"
-      puts "[[ -s \"$HOME/.blertr/scripts/blertr\" ]] && . \"$HOME/.blertr/scripts/blertr\""
+      puts "[[ -s \"$HOME/.blertr/app/scripts/blertr\" ]] && . \"$HOME/.blertr/app/scripts/blertr\""
     end
   when "uninstall"
-    blertr_symlink = File.expand_path("~/.blertr")
     if File.exists? blertr_symlink
-      puts "Removing ~/.blertr"
+      puts "Removing #{blertr_symlink}"
       system("rm #{blertr_symlink}")
       puts "Blertr is now (almost) uninstalled.\nRemove from .bashrc file:"
       puts "[[ -s \"$HOME/.blertr/scripts/blertr\" ]] && . \"$HOME/.blertr/scripts/blertr\""
