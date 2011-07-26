@@ -25,6 +25,8 @@ Commands:
 
     uninstall  Remove symlinks and other setup process
                Effectively uninstalling Blertr
+
+    upgrade    Updates current copy of blertr to latest version
     
     info       Pass in a notifier name to get the 
                information it is using to send notifications
@@ -73,6 +75,20 @@ def take_action action, parameters
       puts "[[ -s \"$HOME/.blertr/scripts/blertr\" ]] && . \"$HOME/.blertr/scripts/blertr\""
     else
       puts "ERROR: it doesn't look like Blertr is installed"
+    end
+  when "upgrade"
+    commands = ["gem install blertr", "blertr uninstall", "blertr install"]
+    puts "Right now the upgrade process is very basic. Blertr will run:"
+    commands.each {|c| puts "$ #{c}"}
+    puts "This assumes that blertr is installed using rvm and doesn't require"
+    puts " sudo access."
+    puts "That ok? (y/n)"
+    response = gets
+    if ["y","Y","yes","Yes","YES"].include?(response.chomp)
+      puts "Ok, running commands now."
+      commands.each {|c| system(c)}
+    else
+      puts "You're the boss, exiting now."
     end
   when "info"
     raw_name = parameters.shift
