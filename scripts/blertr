@@ -32,16 +32,17 @@ then
     fi
   fi
 
-  if [[ -z "${blertr_path:-}" ]]
-  then
-    if [[ "$blertr_prefix" = "$HOME" ]]
-    then
-      blertr_path="${blertr_prefix}/.blertr/app"
-    else
-      blertr_path="${blertr_prefix}/blertr/app"
-    fi
-  fi
+#  if [[ -z "${blertr_path:-}" ]]
+#  then
+#    if [[ "$blertr_prefix" = "$HOME" ]]
+#    then
+#      blertr_path="${blertr_prefix}/.blertr/app"
+#    else
+#      blertr_path="${blertr_prefix}/blertr/app"
+#    fi
+#  fi
   
+  blertr_path="${blertr_prefix}/.blertr/app"
   # this is where the blert_now.rb file lives
   blertr_bin_path="${blertr_path}/scripts_bin"
 
