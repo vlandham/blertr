@@ -2,7 +2,7 @@ h1. Blertr
 
 h2. Alerts for long running scripts in bash.
 
-h3. What is it Good For?
+h2. What is it Good For?
 
 Waiting around for a command to finish sucks. You know you need to start the next run after this script has completed, so you just keep checking that terminal for output. This is no fun. It disrupts what you are working on. It distracts you. It wastes your time.
 
@@ -14,7 +14,7 @@ Of course, you *could* modify all your custom scripts to add a section to send a
 
 Blertr side-steps these issues by hooking into bash to do its alerting. Based on a wonderful Mac OSX hint (which I'm having trouble finding the link), Blertr catches terminal commands when they start and when they exit, and sends this information to the Blertr control center which dispatches the appropriate alerts to you based on the amount of time the command has taken to run. Easy.
 
-h3. Blertr Notifications
+h2. Blertr Notifications
 
 Blertr comes with a bunch of notifiers that will tell you when a command has finished in a variety of ways.
 
@@ -24,24 +24,24 @@ For example, you might want to get Growl notifications for tasks that run for 10
 
 Here are the current Blertr Notifiers:
 
-h4. Growl
+h3. Growl
 
 "Growl":http://growl.info/ is a nice clean notification service for Mac OSX. To have Blertr notify you through growl, you'll need the growlnotify application installed, which is included in the "Extras" directory in the Growl dmg.
 
-h4. Notify Send
+h3. Notify Send
 
 Notify Send is the Linux version of Growl. It looks to be installed on a number of platforms (Ubuntu, CentOS). Its a nice, simple pop-up notification service.
 
-h4. Email
+h3. Email
 
 Blertr can send you an email when a process is done. Great for long running tasks. Step away from your computer, and know with confidence when to come back.
 
-h4. Twitter
+h3. Twitter
 
 Want to know when a process is complete, but don't like extra emails? Blertr will tweet you when your command is done.
 
 
-h3. Requirements
+h2. Requirements
 
 All this awesomeness comes at a slight cost. Blertr only works with the Bash shell, and requires Ruby. Blertr currently has only been tested on ruby 1.9.2.
 
@@ -60,7 +60,7 @@ Each of the Notifiers need a bit of configuration to work properly as well:
 
 But really, for the awesomeness that is Blertr, this setup isn't so bad.
 
-h3. Install
+h2. Install
 
 Once you have Ruby 1.9.2 in place (using rvm) and the other stuff setup, installation should be simple:
 
@@ -78,11 +78,11 @@ Then you just need to add this line to the end of your @.bashrc@ file:
 
 This adds the hooks necessary to make Blertr run.
 
-h3. Setup
+h2. Setup
 
 You probably want to set your defaults up a bit once installed.
 
-h4. Email
+h3. Email
 
 Blertr needs to know who to send emails to. Use this command to tell it:
 
@@ -92,13 +92,13 @@ blertr set email to myemail@gmail.com
 
 Of course, use your own email for @myemail@. This command 'sets' the 'to' configuration for the 'email' notifier. 
 
-h4. Twitter
+h3. Twitter
 
 Currently, the twitter config file doesn't come with Blertr by default... We're working on something for that.
 
-h4. Time
+h3. Time
 
-Blertr has default times for each notifier. These, you might want to tweak to your liking. You can see the time setting for a particular notifier using the info command:
+Blertr has default times for each notifier. These, you might want to tweak to your liking. You can see the time setting for a particular notifier using the @info@ command:
 
 <code>
 blertr info growl
@@ -121,7 +121,7 @@ blertr time growl 20 seconds
 The time command takes time in a variety of formats. '5 minutes', '6 hours', '2 days' are all valid time entries. 
 
 
-h4. Exclusions
+h3. Exclusions
 
 Alerts are great and all, but there are plenty of commands that you would rather not get emails about. You probably don't need a tweet every time you exit from a ssh connection. That's where Blertr exclusions come in. By default, there are a number of commands excluded from alerting you. You can add to the list using the @exclude@ command:
 
@@ -133,7 +133,7 @@ Blertr won't alert you for any command that starts with 'git push'.
 
 It might take a bit of work to perfect your exclusions, but it should be pretty easy to do.
 
-h3. Commands
+h2. Commands
 
 We already saw a bunch of commands already. Here is a full listing of what Blertr understands, from the @help@ command:
 
@@ -175,7 +175,7 @@ We already saw a bunch of commands already. Here is a full listing of what Blert
 </code>
 
 
-h3. Suggestions
+h2. Suggestions
 
 Have some feature ideas to make Blertr even more incredible? Send them to me!
 
