@@ -2,6 +2,9 @@ h1. Blertr
 
 h2. Alerts for long running scripts in bash.
 
+Amazing moving logo found here:
+"Blertr":vlandham.github.com/blertr
+
 h2. What is it Good For?
 
 Waiting around for a command to finish sucks. You know you need to start the next run after this script has completed, so you just keep checking that terminal for output. This is no fun. It disrupts what you are working on. It distracts you. It wastes your time.
@@ -39,6 +42,7 @@ Blertr can send you an email when a process is done. Great for long running task
 Here is what a typical email from Blertr looks like:
 <pre>
 <code>
+
   Title: bwa_align.sh is done!
 
   Message:
