@@ -3,7 +3,7 @@ h1. Blertr
 h2. Alerts for long running scripts in bash.
 
 Amazing moving logo found here:
-"Blertr":vlandham.github.com/blertr
+"Blertr":http://vlandham.github.com/blertr
 
 h2. What is it Good For?
 
