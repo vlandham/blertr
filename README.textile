@@ -46,11 +46,11 @@ h2. Requirements
 All this awesomeness comes at a slight cost. Blertr only works with the Bash shell, and requires Ruby. Blertr currently has only been tested on ruby 1.9.2.
 
 RVM can be used to quickly get up to speed on the ruby environment:
-<code>
+<pre>
 bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)
 rvm install 1.9.2
 rvm use 1.9.2 --default
-</code>
+</pre>
 
 Each of the Notifiers need a bit of configuration to work properly as well:
 * *Growl* needs growlnotify installed and available.
@@ -85,9 +85,9 @@ h3. Email
 
 Blertr needs to know who to send emails to. Use this command to tell it:
 
-<code>
+<pre>
 blertr set email to myemail@gmail.com
-</code>
+</pre>
 
 Of course, use your own email for @myemail@. This command 'sets' the 'to' configuration for the 'email' notifier. 
 
@@ -99,23 +99,23 @@ h3. Time
 
 Blertr has default times for each notifier. These, you might want to tweak to your liking. You can see the time setting for a particular notifier using the @info@ command:
 
-<code>
+<pre>
 blertr info growl
-</code>
+</pre>
 
 Should return something like:
-<code>
+<pre>
 Configuration for: growl
 time: 10
-</code>
+</pre>
 
 Meaning Blertr will notify via Growl for tasks that take longer than 10 seconds. 
 
 To change this, you can use the @time@ command:
 
-<code>
+<pre>
 blertr time growl 20 seconds
-</code>
+</pre>
 
 The time command takes time in a variety of formats. '5 minutes', '6 hours', '2 days' are all valid time entries. 
 
@@ -124,9 +124,9 @@ h3. Exclusions
 
 Alerts are great and all, but there are plenty of commands that you would rather not get emails about. You probably don't need a tweet every time you exit from a ssh connection. That's where Blertr exclusions come in. By default, there are a number of commands excluded from alerting you. You can add to the list using the @exclude@ command:
 
-<code>
+<pre>
 blertr exclude git push
-</code>
+</pre>
 
 Blertr won't alert you for any command that starts with 'git push'.
 
