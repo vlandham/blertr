@@ -36,9 +36,25 @@ h3. Email
 
 Blertr can send you an email when a process is done. Great for long running tasks. Step away from your computer, and know with confidence when to come back.
 
+Here is what a typical email from Blertr looks like:
+<pre>
+<code>
+Title: bwa_align.sh is done!
+
+Message:
+bwa_align.sh has completed.
+Command: bwa_align.sh 3 hjaa1 3 ../../files/
+Time: 1.44 hours
+</code>
+</pre>
+
+So, not only do you get an alert when the command has finished, you get the total time it took to run that command. Need to know how long a particular command runs? With Blertr, you are well on your way to finding that out.
+
 h3. Twitter
 
-Want to know when a process is complete, but don't like extra emails? Blertr will tweet you when your command is done.
+Want to know when a process is complete, but don't like extra emails? Blertr can tweet you when your command is done!
+
+(Work in progress).
 
 
 h2. Requirements
