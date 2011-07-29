@@ -1,0 +1,182 @@
+h1. Blertr
+
+h2. Alerts for long running scripts in bash.
+
+h3. What is it Good For?
+
+Waiting around for a command to finish sucks. You know you need to start the next run after this script has completed, so you just keep checking that terminal for output. This is no fun. It disrupts what you are working on. It distracts you. It wastes your time.
+
+Why can't the script just tell you when its done, when its done?
+
+That's where Blertr comes in. Want an email when that long @cp@ is finally over? Done. Want a tweet when your custom perl script finally exits? You got it.
+
+Of course, you *could* modify all your custom scripts to add a section to send an email to yourself at the end of execution. That's possible for custom scripts. But tedious and heavy handed. What about just running a straight bash command? No luck. Somebody else's scripts? Edit if you dare.
+
+Blertr side-steps these issues by hooking into bash to do its alerting. Based on a wonderful Mac OSX hint (which I'm having trouble finding the link), Blertr catches terminal commands when they start and when they exit, and sends this information to the Blertr control center which dispatches the appropriate alerts to you based on the amount of time the command has taken to run. Easy.
+
+h3. Blertr Notifications
+
+Blertr comes with a bunch of notifiers that will tell you when a command has finished in a variety of ways.
+
+Each notifier can be told how long a task should be running before you are notified by the notifier.
+
+For example, you might want to get Growl notifications for tasks that run for 10 seconds or more. And then get emails for processes that run over an hour. This way you won't get bogged down in a bunch of emails from all your short processes, but you will be alerted through the correct channel based on how long it took the task to finish.
+
+Here are the current Blertr Notifiers:
+
+h4. Growl
+
+"Growl":http://growl.info/ is a nice clean notification service for Mac OSX. To have Blertr notify you through growl, you'll need the growlnotify application installed, which is included in the "Extras" directory in the Growl dmg.
+
+h4. Notify Send
+
+Notify Send is the Linux version of Growl. It looks to be installed on a number of platforms (Ubuntu, CentOS). Its a nice, simple pop-up notification service.
+
+h4. Email
+
+Blertr can send you an email when a process is done. Great for long running tasks. Step away from your computer, and know with confidence when to come back.
+
+h4. Twitter
+
+Want to know when a process is complete, but don't like extra emails? Blertr will tweet you when your command is done.
+
+
+h3. Requirements
+
+All this awesomeness comes at a slight cost. Blertr only works with the Bash shell, and requires Ruby. Blertr currently has only been tested on ruby 1.9.2.
+
+RVM can be used to quickly get up to speed on the ruby environment:
+<code>
+bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)
+rvm install 1.9.2
+rvm use 1.9.2 --default
+</code>
+
+Each of the Notifiers need a bit of configuration to work properly as well:
+* *Growl* needs growlnotify installed and available.
+* *Notify Send* needs notify-send installd.
+* *Email* needs openssl support in ruby. On Linux, this might need to be compiled. Follow "these rvm-based steps":http://cjohansen.no/en/ruby/ruby_version_manager_ubuntu_and_openssl to get going quickly.
+* *Twitter* needs some authentication stuff in the twitter notifier's config file. It also users the twitter gem.
+
+But really, for the awesomeness that is Blertr, this setup isn't so bad.
+
+h3. Install
+
+Once you have Ruby 1.9.2 in place (using rvm) and the other stuff setup, installation should be simple:
+
+<code>
+gem install blertr
+# ...
+blertr install
+</code>
+
+Then you just need to add this line to the end of your @.bashrc@ file:
+
+<code>
+[[ -s "$HOME/.blertr/app/scripts/blertr" ]] && . "$HOME/.blertr/app/scripts/blertr"
+</code>
+
+This adds the hooks necessary to make Blertr run.
+
+h3. Setup
+
+You probably want to set your defaults up a bit once installed.
+
+h4. Email
+
+Blertr needs to know who to send emails to. Use this command to tell it:
+
+<code>
+blertr set email to myemail@gmail.com
+</code>
+
+Of course, use your own email for @myemail@. This command 'sets' the 'to' configuration for the 'email' notifier. 
+
+h4. Twitter
+
+Currently, the twitter config file doesn't come with Blertr by default... We're working on something for that.
+
+h4. Time
+
+Blertr has default times for each notifier. These, you might want to tweak to your liking. You can see the time setting for a particular notifier using the info command:
+
+<code>
+blertr info growl
+</code>
+
+Should return something like:
+<code>
+Configuration for: growl
+time: 10
+</code>
+
+Meaning Blertr will notify via Growl for tasks that take longer than 10 seconds. 
+
+To change this, you can use the @time@ command:
+
+<code>
+blertr time growl 20 seconds
+</code>
+
+The time command takes time in a variety of formats. '5 minutes', '6 hours', '2 days' are all valid time entries. 
+
+
+h4. Exclusions
+
+Alerts are great and all, but there are plenty of commands that you would rather not get emails about. You probably don't need a tweet every time you exit from a ssh connection. That's where Blertr exclusions come in. By default, there are a number of commands excluded from alerting you. You can add to the list using the @exclude@ command:
+
+<code>
+blertr exclude git push
+</code>
+
+Blertr won't alert you for any command that starts with 'git push'.
+
+It might take a bit of work to perfect your exclusions, but it should be pretty easy to do.
+
+h3. Commands
+
+We already saw a bunch of commands already. Here is a full listing of what Blertr understands, from the @help@ command:
+
+<code>
+    help       Output this help message
+
+    install    Add symlinks to your system to allow
+               Blertr to function properly
+
+    uninstall  Remove symlinks and other setup process
+               Effectively uninstalling Blertr
+
+    upgrade    Updates current copy of blertr to latest version
+    
+    info       Pass in a notifier name to get the 
+               information it is using to send notifications
+               Example: blertr info email
+
+    status     For each notifier, Blertr lists if it currently can
+               send notifications and then lists any error messages
+               if it cannot. Useful for debuggin problems with notifiers
+
+    exclude    Pass in a shell command to prevent Blertr from
+               sending notifications when that command is 
+               executed
+               Example: blertr exclude ssh
+   
+    time       Pass in a notifier name and a time string to
+               set the time required to pass before the
+               notifier sends a message for a command
+               Example: blertr time email 5 minutes
+               This would make blertr send an email only if
+               the command executing took longer than 5 mins
+
+    set        Pass in the notifier name, a configuration key, and
+               a value. Blertr will add this key / value to the 
+               notifiers config file.
+               Example: blertr set mail to user@gmail.com
+</code>
+
+
+h3. Suggestions
+
+Have some feature ideas to make Blertr even more incredible? Send them to me!
+
+Happy Blerting!
