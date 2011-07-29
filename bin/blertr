@@ -47,6 +47,11 @@ Commands:
                Example: blertr time email 5 minutes
                This would make blertr send an email only if
                the command executing took longer than 5 mins
+
+    set        Pass in the notifier name, a configuration key, and
+               a value. Blertr will add this key / value to the 
+               notifiers config file.
+               Example: blertr set mail to user@gmail.com
 EOS
   puts help_string
 end
@@ -132,6 +137,22 @@ def take_action action, parameters
     name = parameters.join(" ")
     puts "Excluding #{name} from Blertr alerts"
     Blertr::Blacklist.new.add(name)
+  when "set"
+    notifier_name = parameters.shift
+    if Blertr::Control::is_notifier? notifier_name
+      key = parameters.shift
+      value = parameters.shift
+      if key and value
+        puts "Setting #{notifier_name}'s #{key} to #{value}"
+        Blertr::Control::notifier_with_name(notifier_name).set_option(key,value)
+      else
+        puts "set command requires a key and a value to set it to"
+        puts "example blertr set email to user@gmail.com"
+      end
+    else
+      puts "Sorry, #{action} isn't a notifier."
+      puts "Use blertr status for a list of all notifiers"
+    end
   when "time"
     notifier_found = false
     notifiers = parameters.shift.split(",")

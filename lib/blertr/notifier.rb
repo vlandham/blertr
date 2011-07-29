@@ -19,8 +19,12 @@ module Blertr
     end
 
     def set_time new_time
+      set_option :time, new_time
+    end
+
+    def set_option key, value
       opts = options
-      opts[:time] = new_time
+      opts[key.to_sym] = value
       Options::save_options_for name, opts
     end
 
