@@ -64,10 +64,10 @@ h2. Install
 
 Once you have Ruby 1.9.2 in place (using rvm) and the other stuff setup, installation should be simple:
 
-<code>
+<pre>
 gem install blertr
 blertr install
-</code>
+</pre>
 
 Then you just need to add this line to the end of your @.bashrc@ file:
 
@@ -136,7 +136,7 @@ h2. Commands
 
 We already saw a bunch of commands already. Here is a full listing of what Blertr understands, from the @help@ command:
 
-<code>
+<pre>
     help       Output this help message
 
     install    Add symlinks to your system to allow
@@ -171,7 +171,7 @@ We already saw a bunch of commands already. Here is a full listing of what Blert
                a value. Blertr will add this key / value to the 
                notifiers config file.
                Example: blertr set mail to user@gmail.com
-</code>
+</pre>
 
 
 h2. Suggestions
