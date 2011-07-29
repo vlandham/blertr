@@ -39,12 +39,12 @@ Blertr can send you an email when a process is done. Great for long running task
 Here is what a typical email from Blertr looks like:
 <pre>
 <code>
-Title: bwa_align.sh is done!
+  Title: bwa_align.sh is done!
 
-Message:
-bwa_align.sh has completed.
-Command: bwa_align.sh 3 hjaa1 3 ../../files/
-Time: 1.44 hours
+  Message:
+  bwa_align.sh has completed.
+  Command: bwa_align.sh 3 hjaa1 3 ../../files/
+  Time: 1.44 hours
 </code>
 </pre>
 
@@ -63,9 +63,9 @@ All this awesomeness comes at a slight cost. Blertr only works with the Bash she
 
 RVM can be used to quickly get up to speed on the ruby environment:
 <pre>
-bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)
-rvm install 1.9.2
-rvm use 1.9.2 --default
+  bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)
+  rvm install 1.9.2
+  rvm use 1.9.2 --default
 </pre>
 
 Each of the Notifiers need a bit of configuration to work properly as well:
@@ -81,8 +81,8 @@ h2. Install
 Once you have Ruby 1.9.2 in place (using rvm) and the other stuff setup, installation should be simple:
 
 <pre>
-gem install blertr
-blertr install
+  gem install blertr
+  blertr install
 </pre>
 
 Then you just need to add this line to the end of your @.bashrc@ file:
