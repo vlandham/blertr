@@ -13,7 +13,7 @@ module Blertr
     end
 
     def command_short_name
-      self.command.split(/ /)[0]
+      File.basename(self.command.split(/ /)[0])
     end
 
     def time_string

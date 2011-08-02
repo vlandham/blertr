@@ -1,6 +1,21 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Blertr::Message do
+
+  describe "advanced short names" do
+    before(:each) do
+      @seconds = 240
+    end
+    it "should figure out base paths to commands" do
+      path_commands = {"../start.sh 123 -h -o" => "start.sh",
+                       "/usr/bin/ruby -v ./runner.rb" => "ruby",
+                       "../../../commands/bin -kill destroy" => "bin"}
+      path_commands.each do |command, short_name|
+        message = Blertr::Message.new(command, @seconds)
+        message.command_short_name.should == short_name
+      end
+    end
+  end
   describe "basic functionality" do
     before(:each) do
       @command = "cp -r ./ddd/aaa /aaa/ddd"
