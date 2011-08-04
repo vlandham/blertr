@@ -31,8 +31,17 @@ module Blertr
 
     def blacklisted? command
       rtn = false
-      @list.each do |name|
-        if command =~ /^#{name}/
+      command_fields = command.split(/ /)
+      list_matches = @list.collect {|name| name.split(/ /).zip(command_fields)}
+
+      list_matches.each do |match_set|
+        match = true
+        match_set.each do |excluded_section, command_section|
+          if excluded_section != command_section and File.basename(excluded_section) != File.basename(command_section)
+            match = false
+          end
+        end
+        if match
           rtn = true
           return rtn
         end

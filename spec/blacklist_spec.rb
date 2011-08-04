@@ -57,8 +57,17 @@ describe Blertr::Blacklist do
     end
   end
 
+  it "should handle relative commands" do
+    commands = [["git diff","../../git diff"], ["ssh", "/usr/bin/ssh         123@123.com"], ["cp", "/dev/../null/cp /ma/da ./dd/mz"]]
+
+    commands.each do |name, command|
+      @blacklist.add name
+      @blacklist.blacklisted?(command).should == true
+    end
+  end
+
   it "should not exclude similar commands" do
-    commands = [["git diff","git diff", "git log"], ["ssh", "ssh 123@123.com", "scp 123@123.com"], ["cp", "cp /ma/da ./da/ma"]]
+    commands = [["git diff","git diff", "git log"], ["ssh", "ssh 123@123.com", "scp 123@123.com"], ["cp", "cp /ma/da ./da/ma", "cpy /ma/da ./da/ma"], ["git diff", "../git diff", "../git log"], ["git diff", "git diff", "git dif"]]
     commands.each do |name, command, similar_command|
       @blacklist.add name
       @blacklist.blacklisted?(command).should == true
