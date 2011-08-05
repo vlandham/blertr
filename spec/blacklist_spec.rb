@@ -49,7 +49,7 @@ describe Blertr::Blacklist do
   end
 
   it "should handle full commands" do
-    commands = [["git diff","git diff"], ["ssh", "ssh 123@123.com"], ["cp", "cp /ma/da ./da/ma"]]
+    commands = [["git diff","git diff"], ["ssh", "ssh 123@123.com"], ["cp", "cp /ma/da ./da/ma"], ["cp", "cp     "]]
 
     commands.each do |name, command|
       @blacklist.add name

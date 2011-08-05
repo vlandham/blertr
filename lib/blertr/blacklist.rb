@@ -37,10 +37,13 @@ module Blertr
       list_matches.each do |match_set|
         match = true
         match_set.each do |excluded_section, command_section|
-          if excluded_section != command_section and File.basename(excluded_section) != File.basename(command_section)
+          if (excluded_section and command_section) and
+            (excluded_section != command_section) and
+            (File.basename(excluded_section) != File.basename(command_section))
             match = false
           end
         end
+
         if match
           rtn = true
           return rtn
