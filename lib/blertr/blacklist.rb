@@ -1,11 +1,17 @@
 require 'fileutils'
+require 'blertr/constants'
 
 module Blertr
   class Blacklist
     attr_accessor :path, :list
 
     def self.path
-      File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "config", "blacklist.yaml"))
+      base_path = File.expand_path(CONFIG_DIR_PATH)
+      if File.exists?(base_path)
+        File.join(base_path, "blacklist.yaml")
+      else
+        File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "config", "blacklist.yaml"))
+      end
     end
 
     def initialize path = Blacklist::path
