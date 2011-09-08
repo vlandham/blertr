@@ -12,7 +12,11 @@ require 'blertr'
 command_name = ARGV[0]
 command_seconds = ARGV[1].to_i
 if command_name and command_seconds
-  Blertr::Control::alert command_name, command_seconds
+  if RUBY_PLATFORM == 'java'
+    puts "Blertr does not support jruby"
+  else
+    Blertr::Control::alert command_name, command_seconds
+  end
 else
   puts "usage: blertr_now command time_taken"
 end
