@@ -80,6 +80,16 @@ Each of the Notifiers need a bit of configuration to work properly as well:
 
 But really, for the awesomeness that is Blertr, this setup isn't so bad.
 
+h2. Limitations
+
+There are a few quirks to Blertr that may or may not be worth it for you to use:
+* Doesn't deal well with switching to a ruby platform that does not have Blertr installed.
+* Does not work with jruby.
+* Imposes a slight delay when a program has finished running on the command line (working on reducing this).
+* Uses a fragile email system that may or may not break in the future.
+
+If you can live with these issues (or help improve Blertr to remove them!) then read on to get going.
+
 h2. Install
 
 Once you have Ruby 1.9.2 in place (using rvm) and the other stuff setup, installation should be simple:
