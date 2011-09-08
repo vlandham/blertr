@@ -27,7 +27,7 @@ module Blertr
           end
 
           if notifier.will_alert?(message.command, message.seconds)
-            fork do
+            pid = fork do
               begin
                 notifier.alert message
               rescue
@@ -35,6 +35,7 @@ module Blertr
               end #begin
               exit
             end #fork
+            Process.detach(pid)
           end #will_alert?
         end #each
       end #!blacklisted?
